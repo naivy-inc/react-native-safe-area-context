@@ -19,6 +19,7 @@ export interface SafeAreaViewProps {
    */
   initialSafeAreaInsets?: EdgeInsets | null;
   style?: StyleProp<ViewStyle>;
+  Splash: any | null
 }
 
 export function SafeAreaProvider({
@@ -26,6 +27,7 @@ export function SafeAreaProvider({
   initialMetrics,
   initialSafeAreaInsets,
   style,
+  Splash,
 }: SafeAreaViewProps) {
   const parentInsets = useParentSafeAreaInsets();
   const parentFrame = useParentSafeAreaFrame();
@@ -34,13 +36,13 @@ export function SafeAreaProvider({
   );
   const [frame, setFrame] = React.useState<Rect>(
     initialMetrics?.frame ??
-      parentFrame ?? {
-        // Backwards compat so we render anyway if we don't have frame.
-        x: 0,
-        y: 0,
-        width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height,
-      },
+    parentFrame ?? {
+      // Backwards compat so we render anyway if we don't have frame.
+      x: 0,
+      y: 0,
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height,
+    },
   );
   const onInsetsChange = React.useCallback(
     (event: InsetChangedEvent) => {
@@ -83,7 +85,7 @@ export function SafeAreaProvider({
             {children}
           </SafeAreaInsetsContext.Provider>
         </SafeAreaFrameContext.Provider>
-      ) : null}
+      ) : Splash ? <Splash /> : null}
     </NativeSafeAreaProvider>
   );
 }
